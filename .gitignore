@@ -216,3 +216,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+data/raw/
+*.gguf
+*.safetensors
+*.bin
+.env
+models/
+
+CLAUDE.md
+ROADMAP.md
+.DS_Store
