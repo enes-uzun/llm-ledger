@@ -1,0 +1,112 @@
+key,id,run,judge_verdict,human_verdict,agree,note
+1,q01,qwen3-8b_e2-think,correct,correct,yes,
+2,q01,gpt-5-nano_ref-minimal,correct,correct,yes,"Görünüm (Durağan) eksik; soru not değişimini soruyor, kabul."
+3,q01,gpt-5-nano_ref-medium,correct,correct,yes,
+4,q01,qwen3-8b,incorrect,incorrect,yes,"BB- yerine BB yazılmış; eksi işareti düşüyor (satır 5'te de aynı). Normalizasyon/tokenization tarafını kontrol et."
+5,q01,qwen3-8b_e1-prompt-v2,incorrect,incorrect,yes,"Satır 4 ile aynı eksi işareti kaybı."
+6,q02,gpt-5-nano_ref-minimal,correct,correct,yes,
+7,q02,gpt-5-nano_ref-medium,correct,correct,yes,"KAP metninden 'bağlı ortaklığımız' birinci şahıs olarak kopyalanmış; stil sorunu."
+8,q03,qwen3-8b,correct,correct,yes,"Kapasite yok; soru tarih + yatırım tutarı istiyor, kabul."
+9,q03,qwen3-8b_e1-prompt-v2,correct,correct,yes,
+10,q03,qwen3-8b_e2-think,correct,correct,yes,
+11,q03,gpt-5-nano_ref-minimal,correct,correct,yes,
+12,q03,gpt-5-nano_ref-medium,correct,correct,yes,
+13,q03,gpt-5-mini_ref-minimal,correct,correct,yes,
+14,q04,qwen3-8b_e2-think,correct,correct,yes,
+15,q04,gpt-5-nano_ref-medium,correct,correct,yes,
+16,q04,gpt-5-nano_ref-minimal,incorrect,incorrect,yes,"Net 1,0429 yanlış (1,274 x 0,85 = 1,0829)."
+17,q04,qwen3-8b,partial,partial,yes,"Sadece net var ve net olduğu belirtilmemiş; kullanıcı brüt sanabilir."
+18,q04,qwen3-8b_e1-prompt-v2,partial,partial,yes,"Satır 17 ile aynı; net etiketi yok."
+19,q05,qwen3-8b + gpt-5-nano_ref-minimal,correct,correct,yes,"runs alanında iki run birleşmiş (aynı cevap dedup?). Run bazlı skorlarken ikiye açılmalı."
+20,q05,qwen3-8b_e1-prompt-v2,correct,correct,yes,
+21,q05,qwen3-8b_e2-think,correct,correct,yes,
+22,q05,gpt-5-nano_ref-medium,correct,correct,yes,
+23,q06,qwen3-8b,correct,correct,yes,
+24,q06,qwen3-8b_e1-prompt-v2,correct,correct,yes,
+25,q06,qwen3-8b_e2-think,correct,correct,yes,
+26,q06,gpt-5-nano_ref-medium,correct,correct,yes,
+27,q06,gpt-5-mini_ref-minimal,correct,correct,yes,"'Dokümanlarda bu bilgi var:' prefix'i prompt şablonu sızıntısı."
+28,q07,qwen3-8b + qwen3-8b_e1-prompt-v2,correct,correct,yes,"Satır 19 gibi iki run birleşmiş."
+29,q07,qwen3-8b_e2-think,correct,correct,yes,
+30,q07,gpt-5-nano_ref-medium,correct,correct,yes,
+31,q07,gpt-5-mini_ref-minimal,correct,correct,yes,
+32,q08,qwen3-8b,correct,correct,yes,
+33,q08,qwen3-8b_e1-prompt-v2,correct,correct,yes,
+34,q08,gpt-5-nano_ref-minimal,correct,incorrect,NO,"Cevap 'Evet.' ile başlayıp ortada soruyu yeniden yazıyor, sonra 'Hayır'a dönüyor. Judge sadece son cümleye bakmış. Evet/hayır sorusunda ilk kelime yanlış + görünür iç monolog = kullanıcı için yanlış cevap."
+35,q08,gpt-5-nano_ref-medium,correct,correct,yes,
+36,q09,qwen3-8b,correct,correct,yes,
+37,q09,qwen3-8b_e1-prompt-v2,correct,correct,yes,
+38,q09,qwen3-8b_e2-think,correct,correct,yes,
+39,q09,gpt-5-nano_ref-medium,correct,correct,yes,
+40,q10,qwen3-8b,correct,correct,yes,
+41,q10,qwen3-8b_e1-prompt-v2,correct,correct,yes,"'hesaplanmıştır' diyor ama hesap yok; e1 meta satırı gürültü."
+42,q10,qwen3-8b_e2-think,correct,correct,yes,
+43,q10,gpt-5-nano_ref-medium,correct,correct,yes,
+44,q10,gpt-5-mini_ref-minimal,correct,correct,yes,"Şablon prefix'i yine var."
+45,q11,qwen3-8b,correct,correct,yes,
+46,q11,qwen3-8b_e1-prompt-v2,correct,correct,yes,
+47,q11,qwen3-8b_e2-think,correct,correct,yes,
+48,q11,gpt-5-nano_ref-minimal,correct,correct,yes,
+49,q11,gpt-5-nano_ref-medium,correct,correct,yes,
+50,q11,gpt-5-mini_ref-minimal,correct,correct,yes,
+51,q12,qwen3-8b,correct,correct,yes,"'başvuramazsa' / 'başvurmazsa' küçük anlam kayması, kabul."
+52,q12,qwen3-8b_e1-prompt-v2,correct,correct,yes,
+53,q12,gpt-5-nano_ref-medium,correct,correct,yes,
+54,q13,qwen3-8b_e2-think,correct,correct,yes,
+55,q13,gpt-5-nano_ref-minimal,correct,correct,yes,
+56,q13,gpt-5-nano_ref-medium,correct,correct,yes,
+57,q13,qwen3-8b,partial,partial,yes,"Sadece USD sözleşme; EUR sözleşme kaçmış (multi-hop retrieval miss)."
+58,q13,qwen3-8b_e1-prompt-v2,partial,partial,yes,"Tutar ve tarihler doğru, sözleşme adları yok ('hangi sözleşmeler' sorusu)."
+59,q14,qwen3-8b_e2-think,correct,correct,yes,"Toplama doğru (998.400 + 1.335.000)."
+60,q14,gpt-5-nano_ref-medium,correct,correct,yes,
+61,q14,qwen3-8b_e1-prompt-v2,incorrect,incorrect,yes,"Aralık 2025 siparişi kaçmış; retrieval miss."
+62,q14,gpt-5-mini_ref-minimal,incorrect,incorrect,yes,"Satır 61 ile aynı miss."
+63,q15,qwen3-8b_e2-think,correct,partial,NO,"Ertelenen şey ihale değil açıklamaydı; cevap ihale ertelenmiş gibi anlatıyor. T4'e teklif verildiği söylenmiyor, 'sonuçlar yer almıyor' girişi kafa karıştırıcı. T2 iptali doğru."
+64,q15,gpt-5-nano_ref-medium,incorrect,correct,NO,"Judge hatası: gold'daki 'Ocak 2025'te açıklandı' teklifin açıklanması, ihale sonucu değil. Cevap gold ile tutarlı (teklif verildi, açıklama ertelendi, sonuç yok, T2 iptal). Sadece T2 iptal tarihi (Nisan 2025) eksik."
+65,q16,qwen3-8b,correct,correct,yes,"Md. 6 atfı ve 'sebep ortadan kalkınca açıklama' eksik; çekirdek şartlar var, kabul."
+66,q16,qwen3-8b_e1-prompt-v2,correct,correct,yes,
+67,q16,qwen3-8b_e2-think,correct,partial,NO,"Kararın 17.12.2024'te açıklandığını söylüyor; karar o gün alındı, açıklama ertelendi. Sorunun özüyle çelişen tarih hatası. 'Havaliyarları' isim bozulması da var. Şartlar kısmı doğru."
+68,q16,gpt-5-nano_ref-minimal,correct,correct,yes,"Nedenlerde 'yasal hak ve menfaat' eksik, küçük."
+69,q16,gpt-5-nano_ref-medium,correct,correct,yes,"Doğru ama şişkin; 6(2) iki kez tekrar, md. 7 eklemesi gold dışı (doğrulanmalı)."
+70,q17,qwen3-8b_e1-prompt-v2,correct,partial,NO,"Call opsiyonu için BDDK onayı şartı yok; sorunun özü bu. Judge 'all conditions match' demiş ama atlamış."
+71,q17,gpt-5-nano_ref-medium,correct,correct,yes,"İçerik doğru; son madde ham mevzuat yapıştırması (RG atfı, bozuk numaralandırma)."
+72,q18,qwen3-8b_e2-think,correct,correct,yes,"'sigortalama zorunluluğu' ifadesi abartılı olabilir; bildiğim kadarıyla 4.2.8 zorunlu ilkeler listesinde değil, kontrol et."
+73,q18,gpt-5-nano_ref-medium,correct,correct,yes,
+74,q18,qwen3-8b_e1-prompt-v2,incorrect,partial,NO,"Söylenen hiçbir şey yanlış değil; ilke numarası (II-17.1 / 4.2.8) ve KAP açıklaması eksik. Incorrect fazla sert."
+75,q19,qwen3-8b,correct,correct,yes,"Sayı gerekçelendirilmiş, süre gerekçesi yok; sonuç doğru."
+76,q19,qwen3-8b_e1-prompt-v2,correct,partial,NO,"Sonuç doğru, gerekçe yanlış: '2024 Aralık' diyor; doğrusu 2024 dönem sonunu izleyen ay, yani Ocak 2025 (karar 29.01.2025)."
+77,q19,qwen3-8b_e2-think,correct,partial,NO,"Süre için yanlış hüküm kullanılmış (35/5, rapor tamamlama). Bir aylık seçim süresi ve 29.01 tarihi yok. Sonuç tutuyor ama gerekçe çürük."
+78,q19,gpt-5-nano_ref-medium,correct,correct,yes,"İyi örnek: bilinmeyen kısmı açıkça söylüyor."
+79,q20,qwen3-8b,correct,correct,yes,
+80,q20,gpt-5-nano_ref-medium,correct,correct,yes,
+81,q20,qwen3-8b_e1-prompt-v2,incorrect,partial,NO,"Rakamlar tam doğru, tek hata 'açıklamak zorundadır'. Aynı hata satır 82'de partial almış; judge tutarsız."
+82,q20,qwen3-8b_e2-think,partial,partial,yes,"Verdict doğru ama judge gerekçesi kısmen yanlış: 'önemli değişiklikte sayı sınırı uygulanmaz' gerçek hüküm (satır 80'de de var). Asıl hata 'zorunludur'."
+83,q21,qwen3-8b_e1-prompt-v2,correct,correct,yes,
+84,q21,qwen3-8b_e2-think,correct,correct,yes,
+85,q21,gpt-5-nano_ref-minimal,correct,correct,yes,
+86,q21,gpt-5-nano_ref-medium,correct,correct,yes,
+87,q21,gpt-5-mini_ref-minimal,correct,correct,yes,
+88,q21,qwen3-8b,incorrect,correct,NO,"Judge hatası: 'KDV hariç 1.094 milyon' ile '1.094 milyon + KDV' aynı şey. Taksit tarihleri sorulmamış."
+89,q22,qwen3-8b,correct,correct,yes,
+90,q22,qwen3-8b_e1-prompt-v2,correct,correct,yes,
+91,q22,qwen3-8b_e2-think,correct,correct,yes,
+92,q22,gpt-5-nano_ref-minimal,correct,correct,yes,
+93,q22,gpt-5-nano_ref-medium,correct,correct,yes,
+94,q22,gpt-5-mini_ref-minimal,correct,correct,yes,
+95,q23,qwen3-8b,correct,correct,yes,
+96,q23,qwen3-8b_e1-prompt-v2,correct,correct,yes,
+97,q23,qwen3-8b_e2-think,correct,correct,yes,
+98,q23,gpt-5-nano_ref-minimal,correct,correct,yes,
+99,q23,gpt-5-nano_ref-medium,correct,correct,yes,
+100,q23,gpt-5-mini_ref-minimal,correct,correct,yes,"Kuruluş tarihi 10.12.2025 gold'da yok; muhtemelen dokümandan, doğrulanmalı."
+101,q24,qwen3-8b,correct,correct,yes,
+102,q24,qwen3-8b_e1-prompt-v2,correct,correct,yes,
+103,q24,qwen3-8b_e2-think,correct,correct,yes,
+104,q24,gpt-5-nano_ref-minimal,correct,correct,yes,
+105,q24,gpt-5-nano_ref-medium,correct,correct,yes,
+106,q24,gpt-5-mini_ref-minimal,correct,correct,yes,
+107,q27,qwen3-8b_e2-think,correct,correct,yes,"Temiz ret."
+108,q32,qwen3-8b_e2-think,incorrect,incorrect,yes,"Önce 'bilgi yok' diyor, sonra beklentiyi gerçekleşen gibi veriyor; gold'un özellikle uyardığı hata."
+109,q34,qwen3-8b_e1-prompt-v2,incorrect,incorrect,yes,"18 halüsinasyon; doküman atfı da uydurma görünüyor."
+110,q34,qwen3-8b_e2-think,incorrect,incorrect,yes,"Aralık 2024 açılışlarını (34) 2025'e taşımış; tarih karıştırma."
+111,q34,gpt-5-nano_ref-medium,incorrect,incorrect,yes,"Satır 110 ile aynı tarih karıştırma."

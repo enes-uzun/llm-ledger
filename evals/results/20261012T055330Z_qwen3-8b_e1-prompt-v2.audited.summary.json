@@ -1,0 +1,72 @@
+{
+  "model": "qwen3:8b",
+  "backend": "ollama",
+  "context_mode": "oracle",
+  "prompt_version": "v2",
+  "tag": "e1-prompt-v2",
+  "golden": "golden_v1.jsonl",
+  "golden_sha256": "03c45e486ecd",
+  "judge": "gpt-5-mini",
+  "git_commit": "cf5bdb0",
+  "started_at": "20261012T055330Z",
+  "hardware": "MacBook Air M4, 16 GB, fanless",
+  "num_ctx": 16384,
+  "think": false,
+  "reasoning_effort": null,
+  "price_usd_per_1m": [
+    0,
+    0
+  ],
+  "python": "3.14.8",
+  "false_abstentions": "2/24",
+  "hallucinated_answers": "1/12",
+  "prompt_tokens_mean": 1102,
+  "completion_tokens_mean": 66,
+  "cost_usd_per_question": 0.0,
+  "cost_usd_total": 0.0,
+  "judge_cost_usd_total": 0.0226,
+  "gen_tok_per_s_mean": 19.9,
+  "audited": "001-judge-audit.csv",
+  "overall": {
+    "n": 36,
+    "score": 0.778,
+    "risk_score": 0.694,
+    "correct": 25,
+    "partial": 6,
+    "incorrect": 5,
+    "latency_p50_s": 6.53,
+    "latency_p95_s": 21.84
+  },
+  "by_category": {
+    "easy": {
+      "n": 12,
+      "score": 0.792,
+      "risk_score": 0.708,
+      "correct": 9,
+      "partial": 1,
+      "incorrect": 2,
+      "latency_p50_s": 8.01,
+      "latency_p95_s": 13.04
+    },
+    "multi_hop": {
+      "n": 12,
+      "score": 0.625,
+      "risk_score": 0.542,
+      "correct": 5,
+      "partial": 5,
+      "incorrect": 2,
+      "latency_p50_s": 15.08,
+      "latency_p95_s": 22.37
+    },
+    "no_answer": {
+      "n": 12,
+      "score": 0.917,
+      "risk_score": 0.833,
+      "correct": 11,
+      "partial": 0,
+      "incorrect": 1,
+      "latency_p50_s": 2.98,
+      "latency_p95_s": 15.56
+    }
+  }
+}
