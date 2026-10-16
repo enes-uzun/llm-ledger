@@ -93,6 +93,23 @@ Return JSON: {{"verdict": "correct|incorrect", "reason": "<one short sentence>"}
 
 SCORES = {"correct": 1.0, "partial": 0.5, "incorrect": 0.0}
 
+# USD per 1M tokens (input, output), standard tier, checked 2026-10-16.
+JUDGE_PRICES = {"gpt-5-mini": (0.25, 2.00), "gpt-5-nano": (0.05, 0.40)}
+
+
+def risk_points(row: dict) -> float:
+    """Risk-adjusted points: in finance a wrong answer is worse than no answer.
+
+    correct +1, partial +0.5, saying "no answer" when there is one 0, any wrong or made-up answer -1.
+    """
+    if row["verdict"] == "correct":
+        return 1.0
+    if row["verdict"] == "partial":
+        return 0.5
+    if row["category"] != "no_answer" and abstains(row["answer"]):
+        return 0.0
+    return -1.0
+
 
 # ---------------------------------------------------------------- helpers
 
@@ -178,6 +195,7 @@ def ask_ollama(args, messages: list[dict]) -> dict:
     data = r.json()
     return {
         "answer": data["message"]["content"].strip(),
+        "thinking": data["message"].get("thinking") or None,
         "latency_s": latency,
         "prompt_tokens": data.get("prompt_eval_count", 0),
         "completion_tokens": data.get("eval_count", 0),
@@ -192,8 +210,11 @@ def ask_openai(args, client: OpenAI, messages: list[dict]) -> dict:
     start = time.perf_counter()
     resp = client.chat.completions.create(**kwargs)
     latency = time.perf_counter() - start
+    details = resp.usage.completion_tokens_details
     return {
         "answer": (resp.choices[0].message.content or "").strip(),
+        "thinking": None,  # OpenAI does not return reasoning text, only its token count
+        "reasoning_tokens": getattr(details, "reasoning_tokens", None) if details else None,
         "latency_s": latency,
         "prompt_tokens": resp.usage.prompt_tokens,
         "completion_tokens": resp.usage.completion_tokens,
@@ -237,6 +258,7 @@ def summarize(rows: list[dict], meta: dict) -> dict:
         return {
             "n": len(rs),
             "score": round(sum(SCORES[r["verdict"]] for r in rs) / len(rs), 3) if rs else None,
+            "risk_score": round(sum(risk_points(r) for r in rs) / len(rs), 3) if rs else None,
             "correct": sum(r["verdict"] == "correct" for r in rs),
             "partial": sum(r["verdict"] == "partial" for r in rs),
             "incorrect": sum(r["verdict"] == "incorrect" for r in rs),
@@ -259,6 +281,11 @@ def summarize(rows: list[dict], meta: dict) -> dict:
         "cost_usd_per_question": round(statistics.mean(cost), 6) if None not in cost else None,
         "cost_usd_total": round(sum(cost), 4) if None not in cost else None,
     }
+    judge_price = JUDGE_PRICES.get(meta.get("judge"))
+    if judge_price:
+        summary["judge_cost_usd_total"] = round(sum(
+            r.get("judge_prompt_tokens", 0) * judge_price[0] + r.get("judge_completion_tokens", 0) * judge_price[1]
+            for r in rows) / 1e6, 4)
     tps = [r["gen_tok_per_s"] for r in rows if r.get("gen_tok_per_s")]
     if tps:
         summary["gen_tok_per_s_mean"] = round(statistics.mean(tps), 1)
@@ -266,14 +293,15 @@ def summarize(rows: list[dict], meta: dict) -> dict:
 
 
 def print_summary(s: dict) -> None:
-    print(f"\n{s['model']} ({s['backend']})  score {s['overall']['score']}  "
+    print(f"\n{s['model']} ({s['backend']})  score {s['overall']['score']}  risk score {s['overall']['risk_score']}  "
           f"p50 {s['overall']['latency_p50_s']}s  p95 {s['overall']['latency_p95_s']}s  "
           f"cost/q {s['cost_usd_per_question']}")
     print(f"false abstentions {s['false_abstentions']}  hallucinated answers {s['hallucinated_answers']}")
-    print(f"{'category':<10} {'n':>3} {'score':>6} {'ok':>3} {'part':>4} {'bad':>3}")
+    print(f"{'category':<10} {'n':>3} {'score':>6} {'risk':>6} {'ok':>3} {'part':>4} {'bad':>3}")
     for cat, b in s["by_category"].items():
         if b["n"]:
-            print(f"{cat:<10} {b['n']:>3} {b['score']:>6} {b['correct']:>3} {b['partial']:>4} {b['incorrect']:>3}")
+            print(f"{cat:<10} {b['n']:>3} {b['score']:>6} {b['risk_score']:>6} "
+                  f"{b['correct']:>3} {b['partial']:>4} {b['incorrect']:>3}")
 
 
 # ---------------------------------------------------------------- main
@@ -295,7 +323,21 @@ def main() -> None:
     p.add_argument("--judge-model", default=DEFAULT_JUDGE)
     p.add_argument("--prompt-version", choices=sorted(SYSTEM_PROMPTS), default="v1")
     p.add_argument("--tag", default="", help="suffix for the results file name, e.g. e1-prompt-v2")
+    p.add_argument("--resummarize", type=Path, help="recompute the summary of a results file (no model or judge calls)")
     args = p.parse_args()
+
+    if args.resummarize:
+        rows = [json.loads(l) for l in args.resummarize.read_text(encoding="utf-8").splitlines() if l.strip()]
+        summary_path = args.resummarize.with_suffix(".summary.json")
+        old = json.loads(summary_path.read_text(encoding="utf-8"))
+        meta = {k: v for k, v in old.items() if not isinstance(v, dict) and k not in
+                ("false_abstentions", "hallucinated_answers", "prompt_tokens_mean", "completion_tokens_mean",
+                 "cost_usd_per_question", "cost_usd_total", "judge_cost_usd_total", "gen_tok_per_s_mean")}
+        meta.setdefault("prompt_version", "v1")
+        summary = summarize(rows, meta)
+        summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+        print_summary(summary)
+        return
 
     load_env()
     judge_client = OpenAI()  # reads OPENAI_API_KEY

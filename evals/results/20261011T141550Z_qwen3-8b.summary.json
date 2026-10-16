@@ -16,19 +16,24 @@
     0
   ],
   "python": "3.14.8",
+  "prompt_version": "v1",
   "overall": {
     "n": 36,
     "score": 0.778,
+    "risk_score": 0.722,
     "correct": 27,
     "partial": 2,
     "incorrect": 7,
     "latency_p50_s": 5.36,
     "latency_p95_s": 24.13
   },
+  "false_abstentions": "5/24",
+  "hallucinated_answers": "0/12",
   "by_category": {
     "easy": {
       "n": 12,
       "score": 0.792,
+      "risk_score": 0.708,
       "correct": 9,
       "partial": 1,
       "incorrect": 2,
@@ -38,6 +43,7 @@
     "multi_hop": {
       "n": 12,
       "score": 0.542,
+      "risk_score": 0.458,
       "correct": 6,
       "partial": 1,
       "incorrect": 5,
@@ -47,6 +53,7 @@
     "no_answer": {
       "n": 12,
       "score": 1.0,
+      "risk_score": 1.0,
       "correct": 12,
       "partial": 0,
       "incorrect": 0,
@@ -58,5 +65,6 @@
   "completion_tokens_mean": 37,
   "cost_usd_per_question": 0.0,
   "cost_usd_total": 0.0,
+  "judge_cost_usd_total": 0.0152,
   "gen_tok_per_s_mean": 19.4
 }

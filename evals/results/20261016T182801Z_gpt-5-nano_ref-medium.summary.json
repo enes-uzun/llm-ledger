@@ -1,0 +1,70 @@
+{
+  "model": "gpt-5-nano",
+  "backend": "openai",
+  "context_mode": "oracle",
+  "prompt_version": "v1",
+  "tag": "ref-medium",
+  "golden": "golden_v1.jsonl",
+  "golden_sha256": "03c45e486ecd",
+  "judge": "gpt-5-mini",
+  "git_commit": "422cefc",
+  "started_at": "20261016T182801Z",
+  "hardware": "api",
+  "num_ctx": null,
+  "think": null,
+  "reasoning_effort": "medium",
+  "price_usd_per_1m": [
+    0.05,
+    0.4
+  ],
+  "python": "3.14.8",
+  "overall": {
+    "n": 36,
+    "score": 0.944,
+    "risk_score": 0.889,
+    "correct": 34,
+    "partial": 0,
+    "incorrect": 2,
+    "latency_p50_s": 6.17,
+    "latency_p95_s": 20.57
+  },
+  "false_abstentions": "0/24",
+  "hallucinated_answers": "1/12",
+  "by_category": {
+    "easy": {
+      "n": 12,
+      "score": 1.0,
+      "risk_score": 1.0,
+      "correct": 12,
+      "partial": 0,
+      "incorrect": 0,
+      "latency_p50_s": 6.97,
+      "latency_p95_s": 10.65
+    },
+    "multi_hop": {
+      "n": 12,
+      "score": 0.917,
+      "risk_score": 0.833,
+      "correct": 11,
+      "partial": 0,
+      "incorrect": 1,
+      "latency_p50_s": 12.21,
+      "latency_p95_s": 33.14
+    },
+    "no_answer": {
+      "n": 12,
+      "score": 0.917,
+      "risk_score": 0.833,
+      "correct": 11,
+      "partial": 0,
+      "incorrect": 1,
+      "latency_p50_s": 3.26,
+      "latency_p95_s": 6.13
+    }
+  },
+  "prompt_tokens_mean": 865,
+  "completion_tokens_mean": 1176,
+  "cost_usd_per_question": 0.000514,
+  "cost_usd_total": 0.0185,
+  "judge_cost_usd_total": 0.0221
+}

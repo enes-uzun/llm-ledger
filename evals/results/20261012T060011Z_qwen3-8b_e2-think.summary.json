@@ -21,6 +21,7 @@
   "overall": {
     "n": 36,
     "score": 0.819,
+    "risk_score": 0.764,
     "correct": 29,
     "partial": 1,
     "incorrect": 6,
@@ -33,6 +34,7 @@
     "easy": {
       "n": 12,
       "score": 0.75,
+      "risk_score": 0.75,
       "correct": 9,
       "partial": 0,
       "incorrect": 3,
@@ -42,6 +44,7 @@
     "multi_hop": {
       "n": 12,
       "score": 0.875,
+      "risk_score": 0.875,
       "correct": 10,
       "partial": 1,
       "incorrect": 1,
@@ -51,6 +54,7 @@
     "no_answer": {
       "n": 12,
       "score": 0.833,
+      "risk_score": 0.667,
       "correct": 10,
       "partial": 0,
       "incorrect": 2,
@@ -62,5 +66,6 @@
   "completion_tokens_mean": 339,
   "cost_usd_per_question": 0.0,
   "cost_usd_total": 0.0,
+  "judge_cost_usd_total": 0.0205,
   "gen_tok_per_s_mean": 17.5
 }
