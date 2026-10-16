@@ -1,6 +1,13 @@
 # 001: Why does a model say "not in the documents" when the answer is right there?
 
-> Status: results final (human-audited). Report polish pending.
+**TL;DR**
+
+- Given the right passages, every model that answered without reasoning often claimed the answer was not there: Qwen3 8B on 5 of 24 answerable questions, gpt-5-nano on 11, the larger gpt-5-mini on 14.
+- Letting the model reason fixed it for gpt-5-nano (risk score 0.58 → 0.94, unnecessary "no answer" 11 → 0) at 6× latency. For Qwen3 8B, thinking helped multi-step questions only modestly and did not beat the baseline overall.
+- Softening the "answer only from the documents" instruction traded refusals for made-up figures. In finance a refusal is the cheaper error, so the strict prompt stays.
+- The LLM judge agreed with a human review on 91% of verdicts, but its errors leaned lenient on long reasoning answers. Without the audit, thinking's effect on Qwen would have been overstated about 3×.
+
+![Risk score and unnecessary refusals per model, reasoning off vs on](001-reasoning.png)
 
 ## Question
 
