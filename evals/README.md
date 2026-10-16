@@ -35,6 +35,29 @@ The questions were drafted by an LLM (Claude) from the corpus, then reviewed and
 
 All questions are about companies, regulations and numbers; none target individuals.
 
+## Running an eval
+
+```bash
+.venv/bin/python evals/run_eval.py --backend ollama --model qwen3:8b
+.venv/bin/python evals/run_eval.py --backend openai --model <model> --price-in <usd/1M> --price-out <usd/1M>
+```
+
+- **Context mode: oracle.** Each question gets the passages of its gold documents (for `no_answer`: the near-miss documents). Short documents are passed whole; long ones as ±2,000-character windows around the evidence quotes. This isolates answer generation from retrieval, so model and quantization runs are comparable; retrieval is measured separately.
+- **Local models** run through Ollama's native API with `num_ctx=16384` and thinking off by default. Ollama's default context is 4,096 tokens and silently truncates longer prompts, which would cut the documents.
+- **Scoring:** correct = 1, partial = 0.5, incorrect = 0. An answer that says "Dokümanlarda bu bilgi yok." is graded by rule (right for `no_answer`, wrong otherwise); everything else goes to an LLM judge.
+- **Output:** `evals/results/<timestamp>_<model>.jsonl` (answers, latency, tokens, cost, verdict and judge reasoning per question) and `.summary.json` (score per category, p50/p95 latency, cost per question, run settings).
+
+### Judge choice
+
+Before the first run, the judge prompt was tested on 7 hand-labelled gradings × 3 repeats:
+
+| Judge | Agreement with hand labels |
+| --- | --- |
+| gpt-5-nano | 18/21 |
+| gpt-5-mini | 21/21 |
+
+The first prompt version let gpt-5-nano accept "BB'den BB'ye" for a reference of "BB-'den BB'ye" and was inconsistent across repeats at every reasoning effort. The fix was twofold: grade only the values the question asks for, copied exactly, and use gpt-5-mini. A proper calibration against human labels on the full set is planned for Level 2.
+
 ## Tools
 
 ```bash

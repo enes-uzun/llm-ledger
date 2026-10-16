@@ -227,3 +227,4 @@ models/
 CLAUDE.md
 ROADMAP.md
 .DS_Store
+evals/results/*.partial.jsonl
