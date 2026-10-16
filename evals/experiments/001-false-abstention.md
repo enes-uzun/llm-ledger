@@ -1,5 +1,7 @@
 # 001: Why does a model say "not in the documents" when the answer is right there?
 
+*Part of [llm-ledger](../../README.md), a 9-month public project measuring LLMs on Turkish finance texts (tokenization, quantization, RAG, serving, fine-tuning, agents, security). This is the first experiment, run on the Month 0 measurement setup.*
+
 **TL;DR**
 
 - Given the right passages, every model that answered without reasoning often claimed the answer was not there: Qwen3 8B on 5 of 24 answerable questions, gpt-5-nano on 11, the larger gpt-5-mini on 14.
